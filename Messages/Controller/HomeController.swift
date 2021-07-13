@@ -6,16 +6,19 @@
 //
 
 import UIKit
+import Combine
 
 class HomeController: UITableViewController {
+    private enum Mode {
+        case active, deactive
+    }
     
     // MARK: - Outlets
-    
+    @IBOutlet weak var quickReach: UICollectionView!
     
     // MARK: - Properties
     let cellId = "homeCellId"
-    let collectionCellId = "quickReach"
-    
+    let collectionCellId = "quickReachId"
     
     // MARK: - Views
     var searchController: UISearchController {
@@ -27,11 +30,18 @@ class HomeController: UITableViewController {
         sc.hidesNavigationBarDuringPresentation = true
         return sc
     }
-    @IBOutlet weak var quickReach: UICollectionView!
+    let containerView = UIView()
+    let customcontroller = CustomSearchController()
+    
+    // MARK: - State
+    var bag = Set<AnyCancellable>()
+    @Published private var searchControllerState: Mode = .deactive
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        observe()
         setup()
+        updateCollectionViewContentHeight()        
     }
     
     // MARK: - Custom Handlers
@@ -41,6 +51,21 @@ class HomeController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: nil, action: nil)
+    }
+    
+    private func observe() {
+        $searchControllerState.sink { mode in
+            print(mode)
+        }.store(in: &bag)
+    }
+    
+    private func updateCollectionViewContentHeight() {
+        if (pinnedMessages.count == 0) {
+            quickReach.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        } else {
+            let calculateHeight = ceil(Float(pinnedMessages.count) / Float(3)) * 120
+            quickReach.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Int(calculateHeight) + 30)
+        }
     }
     
     private func silentMessage() {
@@ -102,15 +127,22 @@ class HomeController: UITableViewController {
         
         return UISwipeActionsConfiguration(actions: [deleteAction, silentAction])
     }
-    
+
 }
 
 // MARK: - Search Controller
 extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
-        let query = searchController.searchBar.text
-        print(query as Any)
+        let _ = searchController.searchBar.text
+    }
+    
+    func willPresentSearchController(_ searchController: UISearchController) {
+        searchControllerState = .active
+    }
+    
+    func willDismissSearchController(_ searchController: UISearchController) {
+        searchControllerState = .deactive
     }
         
 }
@@ -119,7 +151,7 @@ extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
 extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return pinnedMessages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -132,4 +164,5 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let width = UIScreen.main.bounds.width
         return CGSize(width: width/3, height: (width/3) + 10)
     }
+    
 }

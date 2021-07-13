@@ -19,3 +19,9 @@ let fakeMessages: [MessageModel] = [
     MessageModel(sender: "Hepsiburada", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
     MessageModel(sender: "Starbucks", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
 ]
+
+let pinnedMessages: [MessageModel] = [
+    MessageModel(sender: "Google", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(sender: "Facebook", demoMessage: "Hi..."),
+    MessageModel(sender: "Amazon", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+]

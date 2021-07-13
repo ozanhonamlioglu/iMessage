@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -27,7 +28,7 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                             <cells>
-                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="quickReach" id="NUG-EP-OFN" customClass="QuickReachCollectionViewCell" customModule="Messages" customModuleProvider="target">
+                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="quickReachId" id="NUG-EP-OFN" customClass="QuickReachCollectionViewCell" customModule="Messages" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tNg-cS-W8X">
@@ -164,11 +165,28 @@
                     <navigationItem key="navigationItem" title="Messages" id="pnv-pO-agl"/>
                     <connections>
                         <outlet property="quickReach" destination="Apb-Xx-oMb" id="wxf-0k-OsH"/>
+                        <segue destination="tM8-8a-jae" kind="show" id="dTS-a4-v4u"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XMY-qL-2Zz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1050.7246376811595" y="98.4375"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="8Om-0p-28i">
+            <objects>
+                <viewController id="tM8-8a-jae" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ybR-eV-Ch4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="sgz-R3-0tC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Z9Q-TZ-dRx"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s4c-1y-Xpp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2112" y="98"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MOH-OW-4f1">

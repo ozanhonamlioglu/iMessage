@@ -8,13 +8,11 @@
 import UIKit
 import Combine
 
-class HomeController: UITableViewController {
-    private enum Mode {
-        case active, deactive
-    }
+class HomeController: UIViewController {
     
     // MARK: - Outlets
     @IBOutlet weak var quickReach: UICollectionView!
+    @IBOutlet weak var customTableView: UITableView!
     
     // MARK: - Properties
     let cellId = "homeCellId"
@@ -33,30 +31,22 @@ class HomeController: UITableViewController {
     let containerView = UIView()
     let customcontroller = CustomSearchController()
     
-    // MARK: - State
-    var bag = Set<AnyCancellable>()
-    @Published private var searchControllerState: Mode = .deactive
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        observe()
+        
         setup()
-        updateCollectionViewContentHeight()        
+        updateCollectionViewContentHeight()
     }
     
-    // MARK: - Custom Handlers
+    // MARK: - Handlers
     private func setup() {
         quickReach.delegate = self
         quickReach.dataSource = self
+        customTableView.delegate = self
+        customTableView.dataSource = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: nil, action: nil)
-    }
-    
-    private func observe() {
-        $searchControllerState.sink { mode in
-            print(mode)
-        }.store(in: &bag)
     }
     
     private func updateCollectionViewContentHeight() {
@@ -80,26 +70,29 @@ class HomeController: UITableViewController {
         print("message deleted")
     }
     
-    // MARK: - Handlers
+}
+
+// MARK: - Tableview
+extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fakeMessages.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! HomeTableViewCell
         cell.setUpData(sender: fakeMessages[indexPath.row].sender, message: fakeMessages[indexPath.row].demoMessage)
         
         return cell
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
     }
     
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let pinAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
             self?.pinMessage()
             completionHandler(true)
@@ -110,7 +103,7 @@ class HomeController: UITableViewController {
         return UISwipeActionsConfiguration(actions: [pinAction])
     }
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (action, view, completionHandler) in
             self?.deleteMessage()
             completionHandler(true)
@@ -127,22 +120,61 @@ class HomeController: UITableViewController {
         
         return UISwipeActionsConfiguration(actions: [deleteAction, silentAction])
     }
-
+    
 }
 
 // MARK: - Search Controller
 extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
+    
+    func containerStatus(active: Bool) {
+        let duration = 0.3
+        
+        if (active) {
+
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(containerView)
+            NSLayoutConstraint.activate([
+                containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                containerView.topAnchor.constraint(equalTo: view.topAnchor),
+                containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+            containerView.alpha = 0
+            
+            containerView.addSubview(customcontroller.view)
+            NSLayoutConstraint.activate([
+                customcontroller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                customcontroller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                customcontroller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+                customcontroller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            ])
+            
+            UIView.animate(withDuration: duration) {
+                self.containerView.alpha = 1
+            }
+            
+        } else {
+            
+            UIView.animate(withDuration: duration) {
+                self.containerView.alpha = 0
+            } completion: { status in
+                self.containerView.removeFromSuperview()
+            }
+            
+        }
+
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         let _ = searchController.searchBar.text
     }
     
     func willPresentSearchController(_ searchController: UISearchController) {
-        searchControllerState = .active
+        containerStatus(active: true)
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
-        searchControllerState = .deactive
+        containerStatus(active: false)
     }
         
 }

@@ -13,7 +13,7 @@ class CustomSearchController: UIViewController {
         super.viewDidLoad()
         
         print("FUCKER")
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .black
     }
     
 }

@@ -9,7 +9,9 @@ import UIKit
 
 class QuickReachCollectionViewCell: UICollectionViewCell {
     
-    var bigCircle: UIView {
+    private func createBigCircle(_ name: String) -> UIView {
+        let firstLetterOfName = String(name.prefix(1))
+        
         let measure = (UIScreen.main.bounds.width / 3) - 30
         let xycenter = (contentView.frame.width / 2) - (measure / 2)
         
@@ -18,15 +20,15 @@ class QuickReachCollectionViewCell: UICollectionViewCell {
         vw.layer.cornerRadius = measure / 2
         
         let label = UILabel()
-        label.text = "O"
+        label.text = firstLetterOfName
         label.textColor = .white
         label.font = UIFont(name: "ArialRoundedMTBold", size: 40)
         label.translatesAutoresizingMaskIntoConstraints = false
         vw.addSubview(label)
         
         let nameLabel = UILabel()
-        nameLabel.text = "Ozan"
-        nameLabel.textColor = .white
+        nameLabel.text = name
+        nameLabel.textColor = .label
         nameLabel.font = UIFont(name: "AvenirNext-Regular", size: 17)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         vw.addSubview(nameLabel)
@@ -41,7 +43,8 @@ class QuickReachCollectionViewCell: UICollectionViewCell {
         return vw
     }
     
-    func setupUI() {
+    func setupUI(name: String) {
+        let bigCircle = createBigCircle(name)
         contentView.addSubview(bigCircle)
     }
     

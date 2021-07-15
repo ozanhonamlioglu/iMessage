@@ -29,7 +29,8 @@ class HomeController: UIViewController {
         return sc
     }
     let containerView = UIView()
-    let customcontroller = CustomSearchController()
+    let viewmanagers = UIStoryboard(name: "ViewManagers", bundle: nil)
+    var customcontroller: UIViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +46,16 @@ class HomeController: UIViewController {
         customTableView.delegate = self
         customTableView.dataSource = self
         
+        modifyCustomContainerView()
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: nil, action: nil)
+    }
+    
+    private func modifyCustomContainerView() {
+        let controller = viewmanagers.instantiateViewController(identifier: "searchControllerView") as CustomSearchController
+        customcontroller = controller
+        containerView.addSubview(controller.view)
     }
     
     private func updateCollectionViewContentHeight() {
@@ -76,12 +85,12 @@ class HomeController: UIViewController {
 extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fakeMessages.count
+        return listMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! HomeTableViewCell
-        cell.setUpData(sender: fakeMessages[indexPath.row].sender, message: fakeMessages[indexPath.row].demoMessage)
+        cell.setUpData(sender: listMessages[indexPath.row].sender, message: listMessages[indexPath.row].demoMessage)
         
         return cell
     }
@@ -130,6 +139,8 @@ extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
         let duration = 0.3
         
         if (active) {
+            
+            guard customcontroller != nil else { return }
 
             containerView.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(containerView)
@@ -141,14 +152,13 @@ extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
             ])
             containerView.alpha = 0
             
-            containerView.addSubview(customcontroller.view)
             NSLayoutConstraint.activate([
-                customcontroller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-                customcontroller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                customcontroller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-                customcontroller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+                customcontroller!.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+                customcontroller!.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+                customcontroller!.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+                customcontroller!.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             ])
-            
+                        
             UIView.animate(withDuration: duration) {
                 self.containerView.alpha = 1
             }
@@ -188,7 +198,7 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: collectionCellId, for: indexPath) as! QuickReachCollectionViewCell
-        cell.setupUI()
+        cell.setupUI(name: pinnedMessages[indexPath.row].sender)
         return cell
     }
     

@@ -28,8 +28,6 @@ class HomeTableViewCell: UITableViewCell {
         VdemoText.text = message
         VfirstLetterName.text = String(sender.prefix(1))
         
-        
-        
 //        let messageWidth = message.widthOfString(usingFont: UIFont(name: "Avenir Next", size: 18)!)
 //        let lineCount = round((messageWidth / VcomingFrom.frame.width)) > 3 ? 2 : 2
 //

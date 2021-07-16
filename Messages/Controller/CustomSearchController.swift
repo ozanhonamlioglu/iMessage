@@ -22,9 +22,8 @@ class CustomSearchController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let extraHeight = UIDevice.current.hasNotch ? 20 : 0
-        Vspacer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight + CGFloat(extraHeight))
-
+        Vspacer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight - 20)
+        tableView.keyboardDismissMode = .onDrag
         setup()
     }
     
@@ -38,7 +37,7 @@ class CustomSearchController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return customSearchData.count // extra 1 is for duplicate
+        return customSearchData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -47,10 +46,12 @@ class CustomSearchController: UITableViewController {
         switch row.type {
         case .image:
             let cell = tableView.dequeueReusableCell(withIdentifier: foundImagesCellId, for: indexPath) as! FoundImagesTableViewCell
+            cell.data = row.data
             return cell
             
         case .text:
             let cell = tableView.dequeueReusableCell(withIdentifier: foundTextMessageCellId, for: indexPath) as! TextMessageTableViewCell
+            cell.setup(name: row.singleData!.sender!, content: row.singleData!.text!)
             return cell
             
         case .user:
@@ -66,10 +67,12 @@ class CustomSearchController: UITableViewController {
         
         switch row.type {
         case .image:
-            return 100
+            let cellCount = row.data?.count ?? 0
+            let line = Int(ceil(Float(cellCount) / Float(2)))
+            return FoundImageCellSize * CGFloat(line)
             
         case .text:
-            return 100
+            return 80
             
         case .user:
             return (UIScreen.main.bounds.width / 4) + 20

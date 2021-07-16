@@ -64,8 +64,9 @@ class HomeController: UIViewController {
         if (pinnedMessages.count == 0) {
             quickReach.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         } else {
-            let calculateHeight = Int(ceil(Float(pinnedMessages.count) / Float(3))) * Int(QuickReachCellSize)
-            quickReach.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Int(calculateHeight) + 30)
+            let line = Int(ceil(Float(pinnedMessages.count) / Float(3)))
+            let calculateHeight = line * (Int(QuickReachCellSize) + 30)
+            quickReach.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Int(calculateHeight) + line)
         }
     }
     
@@ -148,6 +149,7 @@ extension HomeController: UISearchResultsUpdating, UISearchControllerDelegate {
             ])
             containerView.alpha = 0
             
+            customcontroller!.view.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 customcontroller!.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 customcontroller!.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),

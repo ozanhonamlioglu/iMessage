@@ -79,8 +79,8 @@ class FoundUserCollectionViewCell: UICollectionViewCell {
         let vw = UIView()
 
         let size = FoundUserCellSize - 20
-        let center = (FoundUserCellSize / 2) - (size / 2)
-        vw.frame = CGRect(x: center, y: center, width: size, height: size)
+        let centerXY = (FoundUserCellSize / 2) - (size / 2)
+        vw.frame = CGRect(x: centerXY, y: centerXY, width: size, height: size)
         vw.layer.cornerRadius = size / 2
         vw.backgroundColor = .systemGray4
         
@@ -113,7 +113,6 @@ class FoundUserCollectionViewCell: UICollectionViewCell {
     
     func setup(name: String) {
         let circle = createCircleUser(name)
-        
         contentView.addSubview(circle)
     }
     

@@ -36,12 +36,12 @@ let customSearchData: [SearchedModel] = [
         SearchDataModel(sender: "Jack", senderId: 12)
     ]),
     SearchedModel(type: .image, data: [
-        SearchDataModel(link: "https://picsum.photos/300/300"),
-        SearchDataModel(link: "https://picsum.photos/300/300"),
-        SearchDataModel(link: "https://picsum.photos/300/300"),
+        SearchDataModel(link: "1"),
+        SearchDataModel(link: "2"),
+        SearchDataModel(link: "3"),
     ]),
     SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", sender: "Netflix", senderId: 4)),
-    SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", sender: "My Love 🌹", senderId: 11)),
+    SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Hi...", sender: "My Love 🌹", senderId: 11)),
     SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", sender: "Jack", senderId: 12)),
     SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", sender: "Katie", senderId: 13)),
     SearchedModel(type: .text, singleData: SearchDataModel(link: "", text: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.", sender: "Hepsiburada", senderId: 9)),

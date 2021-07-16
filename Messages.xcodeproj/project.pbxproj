@@ -106,7 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				BD0DE625269A24080010911D /* MessageModel.swift */,
-				4D23446F26A1707C0010C4B9 /* CommonProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -136,6 +135,7 @@
 				BD0DE623269A23C30010911D /* String+Extensions.swift */,
 				4D23447126A175C70010C4B9 /* UIDevice+Extensions.swift */,
 				BD0DE627269A24510010911D /* FakeData.swift */,
+				4D23446F26A1707C0010C4B9 /* CommonProperties.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";

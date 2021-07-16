@@ -27,19 +27,6 @@ class HomeTableViewCell: UITableViewCell {
         VcomingFrom.text = sender
         VdemoText.text = message
         VfirstLetterName.text = sender.firstLetter()
-        
-//        let messageWidth = message.widthOfString(usingFont: UIFont(name: "Avenir Next", size: 18)!)
-//        let lineCount = round((messageWidth / VcomingFrom.frame.width)) > 3 ? 2 : 2
-//
-//        VdemoText.translatesAutoresizingMaskIntoConstraints = false
-//
-//        NSLayoutConstraint.activate([
-//            VdemoText.topAnchor.constraint(equalTo: VcontentTopStack.bottomAnchor),
-//            VdemoText.heightAnchor.constraint(equalToConstant: CGFloat(lineCount * 18))
-//        ])
-        
-        // VcomingFrom.backgroundColor = .red
-        // VdemoText.backgroundColor = .blue
     }
     
 }

@@ -15,4 +15,8 @@ extension String {
         return size.width
     }
     
+    func firstLetter() -> String {
+        String(self.prefix(1))
+    }
+    
 }

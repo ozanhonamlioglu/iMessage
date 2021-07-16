@@ -10,10 +10,10 @@ import UIKit
 class QuickReachCollectionViewCell: UICollectionViewCell {
     
     private func createBigCircle(_ name: String) -> UIView {
-        let firstLetterOfName = String(name.prefix(1))
+        let firstLetterOfName = name.firstLetter()
         
-        let measure = (UIScreen.main.bounds.width / 3) - 30
-        let xycenter = (contentView.frame.width / 2) - (measure / 2)
+        let measure = QuickReachCellSize - 30
+        let xycenter = (QuickReachCellSize / 2) - (measure / 2)
         
         let vw = UIView(frame: CGRect(x: xycenter, y: xycenter, width: measure, height: measure))
         vw.backgroundColor = .lightGray

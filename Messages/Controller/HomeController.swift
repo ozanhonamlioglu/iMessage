@@ -34,7 +34,8 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationItem.searchController = searchController
+
         setup()
         updateCollectionViewContentHeight()
     }
@@ -54,6 +55,7 @@ class HomeController: UIViewController {
     
     private func modifyCustomContainerView() {
         let controller = viewmanagers.instantiateViewController(identifier: "searchControllerView") as CustomSearchController
+        controller.searchBarHeight = searchController.searchBar.frame.height + 20
         customcontroller = controller
         containerView.addSubview(controller.view)
     }
@@ -62,7 +64,7 @@ class HomeController: UIViewController {
         if (pinnedMessages.count == 0) {
             quickReach.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         } else {
-            let calculateHeight = ceil(Float(pinnedMessages.count) / Float(3)) * 120
+            let calculateHeight = Int(ceil(Float(pinnedMessages.count) / Float(3))) * Int(QuickReachCellSize)
             quickReach.frame = CGRect(x: 0, y: 0, width: Int(UIScreen.main.bounds.width), height: Int(calculateHeight) + 30)
         }
     }
@@ -93,12 +95,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         cell.setUpData(sender: listMessages[indexPath.row].sender, message: listMessages[indexPath.row].demoMessage)
         
         return cell
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if navigationItem.searchController == nil {
-            navigationItem.searchController = searchController
-        }
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -203,8 +199,7 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width
-        return CGSize(width: width/3, height: (width/3) + 10)
+        return CGSize(width: QuickReachCellSize, height: QuickReachCellSize + 30)
     }
     
 }

@@ -32,9 +32,8 @@ let pinnedMessages: [MessageModel] = [
 let customSearchData: [SearchedModel] = [
     SearchedModel(type: .user, data: [
         SearchDataModel(sender: "Google", senderId: 1),
-        SearchDataModel(sender: "Facebook", senderId: 2),
-        SearchDataModel(sender: "Jack", senderId: 12),
-        SearchDataModel(sender: "Katie", senderId: 13)
+        SearchDataModel(sender: "My Love 🌹", senderId: 11),
+        SearchDataModel(sender: "Jack", senderId: 12)
     ]),
     SearchedModel(type: .image, data: [
         SearchDataModel(link: "https://picsum.photos/300/300"),

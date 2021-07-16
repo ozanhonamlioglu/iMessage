@@ -9,6 +9,9 @@ import UIKit
 
 class CustomSearchController: UITableViewController {
     
+    // MARK: - Dynamic Properties
+    var searchBarHeight: CGFloat!
+    
     // MARK: - Properties
     let foundUserCellId = "foundUsersCellId"
     let foundImagesCellId = "foundImagesCellId"
@@ -19,6 +22,8 @@ class CustomSearchController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let extraHeight = UIDevice.current.hasNotch ? 20 : 0
+        Vspacer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: searchBarHeight + CGFloat(extraHeight))
 
         setup()
     }
@@ -50,13 +55,26 @@ class CustomSearchController: UITableViewController {
             
         case .user:
             let cell = tableView.dequeueReusableCell(withIdentifier: foundUserCellId, for: indexPath) as! FoundUsersTableViewCell
+            cell.data = row.data
             return cell
         }
 
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 200
-//    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let row = customSearchData[indexPath.row]
+        
+        switch row.type {
+        case .image:
+            return 100
+            
+        case .text:
+            return 100
+            
+        case .user:
+            return (UIScreen.main.bounds.width / 4) + 20
+        }
+
+    }
     
 }

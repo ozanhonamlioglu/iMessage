@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D23447026A1707C0010C4B9 /* CommonProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23446F26A1707C0010C4B9 /* CommonProperties.swift */; };
+		4D23447226A175C70010C4B9 /* UIDevice+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23447126A175C70010C4B9 /* UIDevice+Extensions.swift */; };
 		BD06CBAB2699EA9C002BE667 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD06CBAA2699EA9C002BE667 /* AppDelegate.swift */; };
 		BD06CBAD2699EA9C002BE667 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD06CBAC2699EA9C002BE667 /* SceneDelegate.swift */; };
 		BD06CBB22699EA9C002BE667 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD06CBB02699EA9C002BE667 /* Main.storyboard */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D23446F26A1707C0010C4B9 /* CommonProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonProperties.swift; sourceTree = "<group>"; };
+		4D23447126A175C70010C4B9 /* UIDevice+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extensions.swift"; sourceTree = "<group>"; };
 		BD06CBA72699EA9C002BE667 /* Messages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD06CBAA2699EA9C002BE667 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BD06CBAC2699EA9C002BE667 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				BD0DE625269A24080010911D /* MessageModel.swift */,
+				4D23446F26A1707C0010C4B9 /* CommonProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -129,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				BD0DE623269A23C30010911D /* String+Extensions.swift */,
+				4D23447126A175C70010C4B9 /* UIDevice+Extensions.swift */,
 				BD0DE627269A24510010911D /* FakeData.swift */,
 			);
 			path = Utils;
@@ -234,10 +240,12 @@
 				BD06CBC62699EB57002BE667 /* HomeController.swift in Sources */,
 				BD87DA32269D063D00BE60CF /* CustomSearchController.swift in Sources */,
 				BDCB7B6B26A06C51009E72BD /* FoundUsersTableViewCell.swift in Sources */,
+				4D23447026A1707C0010C4B9 /* CommonProperties.swift in Sources */,
 				BD06CBB52699EA9C002BE667 /* Messages.xcdatamodeld in Sources */,
 				BD0DE628269A24510010911D /* FakeData.swift in Sources */,
 				BD0DE626269A24080010911D /* MessageModel.swift in Sources */,
 				BDCB7B6F26A06E21009E72BD /* FoundImagesTableViewCell.swift in Sources */,
+				4D23447226A175C70010C4B9 /* UIDevice+Extensions.swift in Sources */,
 				BD06CBAB2699EA9C002BE667 /* AppDelegate.swift in Sources */,
 				BD06CBAD2699EA9C002BE667 /* SceneDelegate.swift in Sources */,
 				BD0DE624269A23C30010911D /* String+Extensions.swift in Sources */,

@@ -17,6 +17,8 @@ class HomeController: UIViewController {
     // MARK: - Properties
     let cellId = "homeCellId"
     let collectionCellId = "quickReachId"
+    var activeIndexPathOfSelectedTableViewCell: IndexPath?
+    var currentShadowCell: UIView?
     
     // MARK: - Views
     var searchController: UISearchController {
@@ -35,6 +37,7 @@ class HomeController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.searchController = searchController
+        navigationItem.title = "Messages"
 
         setup()
         updateCollectionViewContentHeight()
@@ -51,6 +54,9 @@ class HomeController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: nil, action: nil)
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: nil, action: nil)
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        customTableView.addGestureRecognizer(longPress)
     }
     
     private func modifyCustomContainerView() {
@@ -140,6 +146,95 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         silentAction.image = UIImage(systemName: "bell.slash.fill")
         
         return UISwipeActionsConfiguration(actions: [deleteAction, silentAction])
+    }
+    
+    @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+        guard let customTableView = customTableView else { return }
+        
+        switch gesture.state {
+        case .began:
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+            
+            guard let targetIndexPath = getIndexPathFromTableViewVia(gesture: gesture) else { return }
+            activeIndexPathOfSelectedTableViewCell = targetIndexPath
+            UIView.animate(withDuration: 0.2) {
+                customTableView.cellForRow(at: targetIndexPath)?.alpha = 0.3
+            }
+            
+            let name = listMessages[targetIndexPath.row].sender
+            let theView = shadowCell(name)
+            view.addSubview(theView)
+            UIView.animate(withDuration: 0.2) {
+                theView.alpha = 0.6
+            }
+            currentShadowCell = theView
+            theView.frame.origin.x = gesture.location(in: view).x - 35
+            theView.frame.origin.y = gesture.location(in: view).y - 35
+            
+        case .changed:
+            guard let currentShadowCell = currentShadowCell else { return }
+            currentShadowCell.frame.origin.x = gesture.location(in: view).x - 35
+            currentShadowCell.frame.origin.y = gesture.location(in: view).y - 35
+            break
+            
+        case .ended:
+            guard let currentIndexPath = activeIndexPathOfSelectedTableViewCell else { return }
+            UIView.animate(withDuration: 0.2) {
+                customTableView.cellForRow(at: currentIndexPath)?.alpha = 1
+            } completion: { [weak self] _ in
+                self?.activeIndexPathOfSelectedTableViewCell = nil
+            }
+            
+            // remove currentShadowCell
+            guard let currentShadowCell = currentShadowCell else { return }
+            currentShadowCell.removeFromSuperview()
+            
+        default:
+            break
+        }
+    }
+    
+    private func getIndexPathFromTableViewVia(gesture recognizer: UILongPressGestureRecognizer) -> IndexPath? {
+        customTableView.indexPathForRow(at: recognizer.location(in: customTableView))
+    }
+    
+    private func shadowCell(_ name: String) -> UIView {
+        let vw = UIView()
+        vw.frame.size = CGSize(width: 70, height: 70)
+        vw.alpha = 0
+        vw.backgroundColor = .lightGray
+        vw.layer.cornerRadius = 35
+        
+        // Add first letter
+        let firstLetterLabel = UILabel()
+        firstLetterLabel.text = name.firstLetter()
+        firstLetterLabel.textColor = .white
+        firstLetterLabel.font = UIFont(name: "ArialRoundedMTBold", size: 35)
+        firstLetterLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        vw.addSubview(firstLetterLabel)
+        
+        NSLayoutConstraint.activate([
+            firstLetterLabel.centerYAnchor.constraint(equalTo: vw.centerYAnchor),
+            firstLetterLabel.centerXAnchor.constraint(equalTo: vw.centerXAnchor)
+        ])
+        
+        // Add full name
+        let nameLabel = UILabel()
+        nameLabel.text = name
+        nameLabel.textColor = .label
+        nameLabel.font = UIFont(name: "ArialRoundedMTBold", size: 15)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        vw.addSubview(nameLabel)
+        
+        NSLayoutConstraint.activate([
+            nameLabel.centerXAnchor.constraint(equalTo: vw.centerXAnchor),
+            nameLabel.topAnchor.constraint(equalTo: vw.bottomAnchor)
+        ])
+        
+        return vw
     }
     
 }

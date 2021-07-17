@@ -70,15 +70,28 @@ class HomeController: UIViewController {
         }
     }
     
-    private func silentMessage() {
+    private func silent() {
         print("message silented")
     }
     
-    private func pinMessage() {
-        print("message pinned")
+    private func pin(thisMessage data: MessageModel) {
+        pinnedMessages.append(data)
+        
+        var index: Int = 0
+        for (i, m) in listMessages.enumerated() {
+            if (m.senderId == data.senderId) {
+                index = i
+            }
+        }
+        listMessages.remove(at: index)
+        
+        updateCollectionViewContentHeight()
+        customTableView.reloadData()
+        
+        self.quickReach.reloadData()
     }
     
-    private func deleteMessage() {
+    private func delete() {
         print("message deleted")
     }
     
@@ -99,8 +112,10 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let data = listMessages[indexPath.row]
+        
         let pinAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.pinMessage()
+            self?.pin(thisMessage: data)
             completionHandler(true)
         }
         pinAction.backgroundColor = .systemYellow
@@ -111,14 +126,14 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.deleteMessage()
+            self?.delete()
             completionHandler(true)
         }
         deleteAction.backgroundColor = .systemRed
         deleteAction.image = UIImage(systemName: "trash")
         
         let silentAction = UIContextualAction(style: .normal, title: nil) { [weak self] (action, view, completionHandler) in
-            self?.silentMessage()
+            self?.silent()
             completionHandler(true)
         }
         silentAction.backgroundColor = .systemBlue

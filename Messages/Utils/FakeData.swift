@@ -7,7 +7,7 @@
 
 import Foundation
 
-let listMessages: [MessageModel] = [
+var listMessages: [MessageModel] = [
     MessageModel(senderId: 1, sender: "Google", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
     MessageModel(senderId: 2, sender: "Facebook", demoMessage: "Hi..."),
     MessageModel(senderId: 3, sender: "Amazon", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
@@ -23,13 +23,10 @@ let listMessages: [MessageModel] = [
     MessageModel(senderId: 13, sender: "Katie", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
 ]
 
-let pinnedMessages: [MessageModel] = [
-    MessageModel(senderId: 1, sender: "Google", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-    MessageModel(senderId: 2, sender: "Facebook", demoMessage: "Hi..."),
-    MessageModel(senderId: 3, sender: "Amazon", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-]
+// this data will dynamically load after pin operations
+var pinnedMessages: [MessageModel] = []
 
-let customSearchData: [SearchedModel] = [
+var customSearchData: [SearchedModel] = [
     SearchedModel(type: .user, data: [
         SearchDataModel(sender: "Google", senderId: 1),
         SearchDataModel(sender: "My Love 🌹", senderId: 11),

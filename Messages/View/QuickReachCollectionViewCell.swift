@@ -45,6 +45,13 @@ class QuickReachCollectionViewCell: UICollectionViewCell {
     
     func setupUI(name: String) {
         let bigCircle = createBigCircle(name)
+        
+        // clean the views in contentView for buggy issue
+        // If you want to see what is the bug, remove the below for loop.
+        for v in contentView.subviews {
+            v.removeFromSuperview()
+        }
+        
         contentView.addSubview(bigCircle)
     }
     

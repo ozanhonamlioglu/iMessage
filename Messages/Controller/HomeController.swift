@@ -19,6 +19,8 @@ class HomeController: UIViewController {
     let collectionCellId = "quickReachId"
     var activeIndexPathOfSelectedTableViewCell: IndexPath?
     var currentShadowCell: UIView?
+    var didShadowCellHitToCollectionView: Bool = false
+    var currentSelectedTableViewCell: MessageModel?
     
     // MARK: - Views
     var searchController: UISearchController {
@@ -36,6 +38,7 @@ class HomeController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
         navigationItem.title = "Messages"
 
@@ -82,14 +85,8 @@ class HomeController: UIViewController {
     
     private func pin(thisMessage data: MessageModel) {
         pinnedMessages.append(data)
-        
-        var index: Int = 0
-        for (i, m) in listMessages.enumerated() {
-            if (m.senderId == data.senderId) {
-                index = i
-            }
-        }
-        listMessages.remove(at: index)
+
+        removeItemFromListMessages(senderId: data.senderId)
         
         updateCollectionViewContentHeight()
         customTableView.reloadData()
@@ -148,22 +145,25 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         return UISwipeActionsConfiguration(actions: [deleteAction, silentAction])
     }
     
+    // This is a haeavy lifting part, we want to drag a cell from tableView and drop in a collectionView
     @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
         guard let customTableView = customTableView else { return }
         
         switch gesture.state {
         case .began:
+            guard let targetIndexPath = getIndexPathFromTableViewVia(gesture: gesture) else { return }
+            
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
             
-            guard let targetIndexPath = getIndexPathFromTableViewVia(gesture: gesture) else { return }
             activeIndexPathOfSelectedTableViewCell = targetIndexPath
             UIView.animate(withDuration: 0.2) {
                 customTableView.cellForRow(at: targetIndexPath)?.alpha = 0.3
             }
             
-            let name = listMessages[targetIndexPath.row].sender
-            let theView = shadowCell(name)
+            let theCell = listMessages[targetIndexPath.row]
+            currentSelectedTableViewCell = theCell
+            let theView = shadowCell(theCell.sender)
             view.addSubview(theView)
             UIView.animate(withDuration: 0.2) {
                 theView.alpha = 0.6
@@ -176,6 +176,16 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             guard let currentShadowCell = currentShadowCell else { return }
             currentShadowCell.frame.origin.x = gesture.location(in: view).x - 35
             currentShadowCell.frame.origin.y = gesture.location(in: view).y - 35
+            
+            if(!didShadowCellHitToCollectionView) {
+                guard let hitIndex = quickReach.indexPathForItem(at: gesture.location(in: quickReach)) else { return }
+                quickReach.beginInteractiveMovementForItem(at: hitIndex)
+                didShadowCellHitToCollectionView = true
+                
+            } else {
+                quickReach.updateInteractiveMovementTargetPosition(gesture.location(in: quickReach))
+            }
+            
             break
             
         case .ended:
@@ -189,14 +199,38 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             // remove currentShadowCell
             guard let currentShadowCell = currentShadowCell else { return }
             currentShadowCell.removeFromSuperview()
+
+            didShadowCellHitToCollectionView = false
+            quickReach.endInteractiveMovement()
+            
+            // check if the last location is in quickReach area
+            guard let hitIndex = quickReach.indexPathForItem(at: gesture.location(in: quickReach)) else { return }
+            guard currentSelectedTableViewCell != nil else { return }
+            pinnedMessages.insert(currentSelectedTableViewCell!, at: hitIndex.row) // we should put collectionViewCell instead of tableViewCell. It is a buggy situation
+            removeItemFromListMessages(senderId: currentSelectedTableViewCell!.senderId)
+            updateCollectionViewContentHeight()
+            quickReach.reloadData()
+            customTableView.reloadData()
+            currentSelectedTableViewCell = nil
             
         default:
-            break
+            didShadowCellHitToCollectionView = false
+            quickReach.cancelInteractiveMovement()
         }
     }
     
     private func getIndexPathFromTableViewVia(gesture recognizer: UILongPressGestureRecognizer) -> IndexPath? {
         customTableView.indexPathForRow(at: recognizer.location(in: customTableView))
+    }
+    
+    private func removeItemFromListMessages(senderId: Int) {
+        var index: Int = 0
+        for (i, m) in listMessages.enumerated() {
+            if (m.senderId == senderId) {
+                index = i
+            }
+        }
+        listMessages.remove(at: index)
     }
     
     private func shadowCell(_ name: String) -> UIView {
@@ -311,7 +345,16 @@ extension HomeController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: QuickReachCellSize, height: QuickReachCellSize + 30)
+        CGSize(width: QuickReachCellSize, height: QuickReachCellSize + 30)
     }
+    
+    // Re-order
+//    func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
+//        true
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//
+//    }
     
 }

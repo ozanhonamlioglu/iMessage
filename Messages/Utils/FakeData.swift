@@ -7,6 +7,22 @@
 
 import Foundation
 
+var listDB: [MessageModel] = [
+    MessageModel(senderId: 1, sender: "Google", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 2, sender: "Facebook", demoMessage: "Hi..."),
+    MessageModel(senderId: 3, sender: "Amazon", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 4, sender: "Netflix", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 5, sender: "Yahoo", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 6, sender: "Tesla", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 7, sender: "Inveon", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 8, sender: "Yemek Sepeti", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 9, sender: "Hepsiburada", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 10, sender: "Starbucks", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 11, sender: "My love 🌹", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 12, sender: "Jack", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    MessageModel(senderId: 13, sender: "Katie", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+]
+
 var listMessages: [MessageModel] = [
     MessageModel(senderId: 1, sender: "Google", demoMessage: "Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
     MessageModel(senderId: 2, sender: "Facebook", demoMessage: "Hi..."),

@@ -49,8 +49,11 @@ class HomeController: UIViewController {
         quickReach.dragDelegate = self
         quickReach.dropDelegate = self
         quickReach.dragInteractionEnabled = true
+        
+        customTableView.dragDelegate = self
         customTableView.delegate = self
         customTableView.dataSource = self
+        customTableView.dragInteractionEnabled = true
         
         modifyCustomContainerView()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "square.and.pencil"), style: .plain, target: nil, action: nil)

@@ -41,7 +41,7 @@ extension HomeController: UICollectionViewDropDelegate {
         }
         
         coordinator.session.loadObjects(ofClass: NSString.self) {[weak self] items in
-            let stringItems = items as! [String]
+            guard let stringItems = items as? [String] else { return }
             
             if (coordinator.proposal.operation == .copy) {
                 
@@ -53,9 +53,15 @@ extension HomeController: UICollectionViewDropDelegate {
                 }
                 
                 self?.quickReach.insertItems(at: indexPaths)
+                self?.updateCollectionViewContentHeight()
+                
+                self?.removeItemFromTableViewWith(id: stringItems.first!)
                 
             } else if (coordinator.proposal.operation == .move) {
                 self?.reorderItems(collectionView, coordinator: coordinator, destinationIndexPath: destinationIndexPath)
+                self?.updateCollectionViewContentHeight()
+                self?.customTableView.reloadData()
+                
             }
             
         }
@@ -68,16 +74,20 @@ extension HomeController: UICollectionViewDropDelegate {
         if let senderId = coordinator.items.first,
            let sourceIndexPath = senderId.sourceIndexPath {
             
-            let item = pinnedMessages[sourceIndexPath.item]
+            if(destinationIndexPath.row <= pinnedMessages.count) {
+             
+                let item = pinnedMessages[sourceIndexPath.item]
 
-            quickReach.performBatchUpdates {
-                pinnedMessages.remove(at: sourceIndexPath.item)
-                pinnedMessages.insert(item, at: destinationIndexPath.item)
+                quickReach.performBatchUpdates {
+                    pinnedMessages.remove(at: sourceIndexPath.item)
+                    pinnedMessages.insert(item, at: destinationIndexPath.item)
 
-                quickReach.deleteItems(at: [sourceIndexPath])
-                quickReach.insertItems(at: [destinationIndexPath])
+                    quickReach.deleteItems(at: [sourceIndexPath])
+                    quickReach.insertItems(at: [destinationIndexPath])
+                }
+                coordinator.drop(senderId.dragItem, toItemAt: destinationIndexPath)
+                
             }
-            coordinator.drop(senderId.dragItem, toItemAt: destinationIndexPath)
             
         }
         
@@ -89,6 +99,7 @@ extension HomeController: UICollectionViewDropDelegate {
         for item in listDB {
             if(item.senderId == Int(senderId)) {
                 message = item
+                break
             }
         }
 
@@ -98,6 +109,22 @@ extension HomeController: UICollectionViewDropDelegate {
     private func addItem(_ senderId: String, at index: Int) {
         let message = findMessageModel(with: senderId)
         pinnedMessages.insert(message, at: index)
+    }
+    
+    private func removeItemFromTableViewWith(id: String) {
+        let id = Int(id)
+        var row: Int = 0
+        
+        for (k, i) in listMessages.enumerated() {
+            if (i.senderId == id) {
+                row = k
+                break
+            }
+        }
+        
+        listMessages.remove(at: row)
+        
+        self.customTableView.reloadData()
     }
     
 }

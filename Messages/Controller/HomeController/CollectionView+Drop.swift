@@ -65,7 +65,6 @@ extension HomeController: UICollectionViewDropDelegate {
             }
             
         }
-            
 
     }
     
@@ -74,7 +73,7 @@ extension HomeController: UICollectionViewDropDelegate {
         if let senderId = coordinator.items.first,
            let sourceIndexPath = senderId.sourceIndexPath {
             
-            if(destinationIndexPath.row <= pinnedMessages.count) {
+            if(destinationIndexPath.row < pinnedMessages.count) {
              
                 let item = pinnedMessages[sourceIndexPath.item]
 

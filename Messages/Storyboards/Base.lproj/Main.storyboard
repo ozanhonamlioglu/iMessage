@@ -175,16 +175,33 @@
                     <connections>
                         <outlet property="customTableView" destination="1Aa-c0-frq" id="Bz9-qf-4pJ"/>
                         <outlet property="quickReach" destination="gKq-Fs-HV2" id="z93-ws-OK0"/>
+                        <segue destination="mKO-8Y-7bt" kind="show" identifier="message" id="X2f-qh-uEp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNn-Tx-K0Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1167" y="-625"/>
         </scene>
+        <!--Message Controller-->
+        <scene sceneID="MzC-KS-53S">
+            <objects>
+                <viewController id="mKO-8Y-7bt" customClass="MessageController" customModule="Messages" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OYK-fg-r13">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="WBl-XZ-HRL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="Xpw-NV-Msw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xmD-vM-T2b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2112" y="-625"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="joW-DJ-J9W">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ekq-bY-713" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ekq-bY-713" customClass="NavigationController" customModule="Messages" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ibX-KE-IPF">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

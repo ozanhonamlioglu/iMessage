@@ -17,6 +17,7 @@ class HomeController: UIViewController {
     // MARK: - Properties
     let cellId = "homeCellId"
     let collectionCellId = "quickReachId"
+    let segueIdentifier = "message"
     
     // MARK: - Views
     var searchController: UISearchController {

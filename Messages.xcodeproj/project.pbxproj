@@ -31,6 +31,8 @@
 		BD741FEA26B1C74B001C9D7A /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD741FE926B1C74B001C9D7A /* MessageController.swift */; };
 		BD87DA32269D063D00BE60CF /* CustomSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD87DA31269D063D00BE60CF /* CustomSearchController.swift */; };
 		BD940B37269AFD5400C8F800 /* QuickReachCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD940B36269AFD5400C8F800 /* QuickReachCollectionViewCell.swift */; };
+		BDB16AC726B6ADF100C41183 /* MessageHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDB16AC626B6ADF100C41183 /* MessageHeader.xib */; };
+		BDB16AC926B6AE0100C41183 /* MessageHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB16AC826B6AE0100C41183 /* MessageHeader.swift */; };
 		BDCB7B6B26A06C51009E72BD /* FoundUsersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCB7B6926A06C51009E72BD /* FoundUsersTableViewCell.swift */; };
 		BDCB7B6C26A06C51009E72BD /* FoundUsersTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDCB7B6A26A06C51009E72BD /* FoundUsersTableViewCell.xib */; };
 		BDCB7B6F26A06E21009E72BD /* FoundImagesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDCB7B6D26A06E21009E72BD /* FoundImagesTableViewCell.swift */; };
@@ -66,6 +68,8 @@
 		BD741FE926B1C74B001C9D7A /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
 		BD87DA31269D063D00BE60CF /* CustomSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSearchController.swift; sourceTree = "<group>"; };
 		BD940B36269AFD5400C8F800 /* QuickReachCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickReachCollectionViewCell.swift; sourceTree = "<group>"; };
+		BDB16AC626B6ADF100C41183 /* MessageHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageHeader.xib; sourceTree = "<group>"; };
+		BDB16AC826B6AE0100C41183 /* MessageHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageHeader.swift; sourceTree = "<group>"; };
 		BDCB7B6926A06C51009E72BD /* FoundUsersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundUsersTableViewCell.swift; sourceTree = "<group>"; };
 		BDCB7B6A26A06C51009E72BD /* FoundUsersTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FoundUsersTableViewCell.xib; sourceTree = "<group>"; };
 		BDCB7B6D26A06E21009E72BD /* FoundImagesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundImagesTableViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 		BD06CBC32699EADB002BE667 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BDB16AC526B6ADDC00C41183 /* MessageHeader */,
 				BDCB7B6826A06BDA009E72BD /* SearchTableViewCells */,
 				BD06CBC72699F3C5002BE667 /* HomeTableViewCell.swift */,
 				BD940B36269AFD5400C8F800 /* QuickReachCollectionViewCell.swift */,
@@ -170,6 +175,15 @@
 				BD538C4026A8A69100437C24 /* TableView+Data.swift */,
 			);
 			path = HomeController;
+			sourceTree = "<group>";
+		};
+		BDB16AC526B6ADDC00C41183 /* MessageHeader */ = {
+			isa = PBXGroup;
+			children = (
+				BDB16AC626B6ADF100C41183 /* MessageHeader.xib */,
+				BDB16AC826B6AE0100C41183 /* MessageHeader.swift */,
+			);
+			path = MessageHeader;
 			sourceTree = "<group>";
 		};
 		BDCB7B6826A06BDA009E72BD /* SearchTableViewCells */ = {
@@ -252,6 +266,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDB16AC726B6ADF100C41183 /* MessageHeader.xib in Resources */,
 				BDCB7B7026A06E21009E72BD /* FoundImagesTableViewCell.xib in Resources */,
 				BD06CBBA2699EA9D002BE667 /* LaunchScreen.storyboard in Resources */,
 				BDCB7B7426A07023009E72BD /* TextMessageTableViewCell.xib in Resources */,
@@ -289,6 +304,7 @@
 				BD06CBAD2699EA9C002BE667 /* SceneDelegate.swift in Sources */,
 				BD538C4126A8A69100437C24 /* TableView+Data.swift in Sources */,
 				BD0DE624269A23C30010911D /* String+Extensions.swift in Sources */,
+				BDB16AC926B6AE0100C41183 /* MessageHeader.swift in Sources */,
 				BD940B37269AFD5400C8F800 /* QuickReachCollectionViewCell.swift in Sources */,
 				BDCB7B7326A07023009E72BD /* TextMessageTableViewCell.swift in Sources */,
 				BD06CBC82699F3C5002BE667 /* HomeTableViewCell.swift in Sources */,

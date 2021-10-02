@@ -18,11 +18,7 @@ class MessageController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Handlers
     private func setup() {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(pop))
-    }
-    
-    @objc func pop() {
-        self.navigationController?.popViewController(animated: true)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: nil, action: nil)
     }
     
 }
